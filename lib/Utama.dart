@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:inventory/AddAsset.dart';
 import 'package:inventory/detail/detail.dart';
 import 'package:inventory/generate.dart';
-import 'package:inventory/widget/cardInventory.dart';
+// import 'package:inventory/widget/cardInventory.dart';
 import 'package:inventory/widget/customDialog.dart';
 
 class Utama extends StatefulWidget {

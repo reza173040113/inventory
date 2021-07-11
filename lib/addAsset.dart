@@ -68,17 +68,17 @@ class _AddAssetState extends State<AddAsset> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          actions: [],
+          title: Text(
+            "Add Inventory Page",
+          ),
           elevation: 0,
           iconTheme: IconThemeData(
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
-          const SizedBox(
-            height: 30.0,
-          ),
           Container(
             margin: const EdgeInsets.all(8.0),
             padding: const EdgeInsets.all(8.0),

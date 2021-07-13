@@ -154,7 +154,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   height: 22,
                 ),
                 Container(
-                  height: 50,
+                  height: 70,
                   // margin: EdgeInsets.all(8.0),
                   // padding: EdgeInsets.all(8.0),
                   child: Expanded(
@@ -185,10 +185,16 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                           child: Container(
                               margin: EdgeInsets.all(8.0),
                               padding: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(235, 102, 0, 1),
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(10)),
+
                               // color: Colors.orange,
                               child: Text(
                                 "Edit",
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
                               )),
                         ),
                         GestureDetector(
@@ -249,11 +255,16 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             );
                           },
                           child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  color: Color.fromRGBO(214, 18, 0, 1),
+                                  borderRadius: BorderRadius.circular(10)),
                               margin: EdgeInsets.all(8.0),
                               padding: EdgeInsets.all(8.0),
                               child: Text(
                                 "Hapus",
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
                               )),
                         ),
                         GestureDetector(
@@ -261,11 +272,16 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             Navigator.of(context).pop();
                           },
                           child: Container(
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(4, 141, 204, 1),
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(10)),
                               margin: EdgeInsets.all(8.0),
                               padding: EdgeInsets.all(8.0),
                               child: Text(
                                 "Tutup",
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
                               )),
                         ),
                       ],

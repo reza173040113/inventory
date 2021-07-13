@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:inventory/login/MyApp.dart';
 
 import 'package:inventory/main.dart';
 

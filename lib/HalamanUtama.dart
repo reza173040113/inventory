@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:inventory/Utama.dart';
 import 'package:inventory/addAsset.dart';
@@ -6,6 +7,17 @@ import 'package:inventory/generate.dart';
 import 'package:inventory/scan.dart';
 import 'package:inventory/widget/cardMenu.dart';
 import 'package:inventory/widget/customDialog.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+
+  runApp(new MaterialApp(
+    title: "Halaman Utama",
+    home: new HalamanUtama(),
+  ));
+}
 
 class HalamanUtama extends StatefulWidget {
   @override
@@ -28,7 +40,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                   height: size.height * 0.30,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/images/2.jpg"),
+                        image: AssetImage("assets/images/6.jpg"),
                         fit: BoxFit.cover),
                   ),
                 ),

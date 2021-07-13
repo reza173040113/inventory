@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:inventory/HalamanUtama.dart';
 import 'package:inventory/Utama.dart';
 
 class AddAsset extends StatefulWidget {
@@ -13,6 +14,13 @@ class AddAsset extends StatefulWidget {
 }
 
 class _AddAssetState extends State<AddAsset> {
+  String dropDownValue;
+  List<String> list = [
+    'Baik Sekali',
+    'Baik',
+    'Kurang Baik',
+    'Kurang Baik Sekali'
+  ];
   String _selectedIndex = "Baik";
   String namaBarang, merk, thnBuat, kodeBarang, statusBarang, keterangan;
   int jmlBarang;
@@ -175,28 +183,50 @@ class _AddAssetState extends State<AddAsset> {
           ),
           Container(
             margin: EdgeInsets.only(left: 10, top: 5),
-            child: DropdownButton<String>(
-              style: TextStyle(color: Colors.white),
-              hint: Text(_selectedIndex, style: TextStyle(color: Colors.black)),
-              dropdownColor: Colors.black,
-              value: _selectedIndex,
-              items: <String>[
-                'Baik Sekali',
-                'Baik',
-                'Kurang Baik',
-                'Kurang Baik Sekali'
-              ].map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: new Text(value),
-                );
-              }).toList(),
-              onChanged: (String statuBarang) {
+            child: DropdownButtonFormField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(10.0),
+                    ),
+                  ),
+                  filled: true,
+                  hintStyle: TextStyle(color: Colors.grey[800]),
+                  hintText: "Status Barang",
+                  fillColor: Colors.white),
+              value: dropDownValue,
+              onChanged: (String Value) {
                 setState(() {
-                  _selectedIndex = statuBarang;
+                  dropDownValue = Value;
                 });
               },
+              items: list
+                  .map((listTitle) => DropdownMenuItem(
+                      value: listTitle, child: Text("$listTitle")))
+                  .toList(),
             ),
+            // DropdownButton<String>(
+            //   style: TextStyle(color: Colors.white),
+            //   hint: Text(_selectedIndex, style: TextStyle(color: Colors.black)),
+            //   dropdownColor: Colors.black,
+            //   value: _selectedIndex,
+            //   items: <String>[
+            //     'Baik Sekali',
+            //     'Baik',
+            //     'Kurang Baik',
+            //     'Kurang Baik Sekali'
+            //   ].map((String value) {
+            //     return DropdownMenuItem<String>(
+            //       value: value,
+            //       child: new Text(value),
+            //     );
+            //   }).toList(),
+            //   onChanged: (String statuBarang) {
+            //     setState(() {
+            //       _selectedIndex = statuBarang;
+            //     });
+            //   },
+            // ),
           ),
           Container(
             margin: const EdgeInsets.all(8.0),
@@ -354,7 +384,7 @@ class _AddAssetState extends State<AddAsset> {
                                           "namaBarang": namaBarang,
                                           "merk": merk,
                                           "thnBuat": int.parse(thnBuat),
-                                          "statusBarang": _selectedIndex,
+                                          "statusBarang": dropDownValue,
                                           "kodeBarang": kodeBarang,
                                           "keterangan": keterangan,
                                           "jmlBarang": jmlBarang
@@ -384,7 +414,7 @@ class _AddAssetState extends State<AddAsset> {
                                                           new MaterialPageRoute(
                                                               builder: (BuildContext
                                                                       context) =>
-                                                                  new Utama()));
+                                                                  new HalamanUtama()));
                                                     },
                                                   ),
                                                 ],

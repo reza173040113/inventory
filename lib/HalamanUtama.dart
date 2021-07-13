@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:inventory/Utama.dart';
 import 'package:inventory/addAsset.dart';
 import 'package:inventory/generate.dart';
+import 'package:inventory/login/MyApp.dart';
 import 'package:inventory/scan.dart';
 import 'package:inventory/widget/cardMenu.dart';
 import 'package:inventory/widget/customDialog.dart';
@@ -28,8 +30,23 @@ class _HalamanUtamaState extends State<HalamanUtama> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
+    final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     return Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text("Halaman Utama"),
+          backgroundColor: Color.fromARGB(237, 30, 60, 50),
+          actions: [
+            GestureDetector(
+                onTap: () async {
+                  await _firebaseAuth.signOut();
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => new MyApp()));
+                },
+                child: Icon(Icons.logout))
+          ],
+        ),
         body: SingleChildScrollView(
           child: SafeArea(
             child: Stack(

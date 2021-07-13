@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:inventory/Utama.dart';
 import 'package:inventory/addAsset.dart';
+import 'package:inventory/editAsset.dart';
 import 'package:inventory/generate.dart';
 import 'package:inventory/login/MyApp.dart';
 import 'package:inventory/scan.dart';
@@ -192,6 +193,8 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                                                                             (BuildContext
                                                                                 context) {
                                                                           return CustomDialogBox(
+                                                                            documentId:
+                                                                                documentSnapshot.id,
                                                                             namaBarang:
                                                                                 task['namaBarang'],
                                                                             merk:
@@ -239,30 +242,27 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                                                                         //     dateString)
                                                                       ],
                                                                     ),
-                                                                    trailing:
-                                                                        IconButton(
-                                                                      icon: Image
-                                                                          .asset(
-                                                                        "assets/images/qrcode.png",
-                                                                        height:
-                                                                            20,
-                                                                      ),
-                                                                      onPressed:
-                                                                          () async {
-                                                                        bool
-                                                                            result =
-                                                                            await Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(builder:
-                                                                              (context) {
-                                                                            return Generate(
-                                                                              documentId: documentSnapshot.id,
-                                                                              nama: task['namaBarang'],
-                                                                            );
-                                                                          }),
-                                                                        );
-                                                                      },
-                                                                    ),
+                                                                    // trailing:
+                                                                    trailing: IconButton(
+                                                                        icon: Image.asset(
+                                                                          "assets/images/qrcode.png",
+                                                                          height:
+                                                                              20,
+                                                                        ),
+                                                                        onPressed: () async {
+                                                                          bool
+                                                                              result =
+                                                                              await Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(builder:
+                                                                                (context) {
+                                                                              return Generate(
+                                                                                documentId: documentSnapshot.id,
+                                                                                nama: task['namaBarang'],
+                                                                              );
+                                                                            }),
+                                                                          );
+                                                                        }),
                                                                   ),
                                                                 ))),
                                                       ],

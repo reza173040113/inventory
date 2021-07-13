@@ -1,7 +1,10 @@
 import 'dart:ui';
 // import 'package:custom_dialog_flutter_demo/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inventory/HalamanUtama.dart';
+import 'package:inventory/editAsset.dart';
 import 'package:inventory/widget/constants.dart';
 
 class CustomDialogBox extends StatefulWidget {
@@ -63,7 +66,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                     color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
               ]),
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(2.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -150,16 +153,124 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 SizedBox(
                   height: 22,
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        widget.text,
-                        style: TextStyle(fontSize: 18),
-                      )),
+                Container(
+                  height: 50,
+                  // margin: EdgeInsets.all(8.0),
+                  // padding: EdgeInsets.all(8.0),
+                  child: Expanded(
+                    child: Row(
+                      // scrollDirection: Axis.horizontal,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return EditAsset(
+                                  namaBarang: widget.namaBarang,
+                                  merk: widget.merk,
+                                  thnBuat: widget.thnBuat,
+                                  kodeBarang: widget.kodeBarang,
+                                  statusBarang: widget.statusBarang,
+                                  jmlBarang: widget.jmlBarang,
+                                  keterangan: widget.keterangan,
+                                );
+                                // Generate(
+                                //   documentId: documentSnapshot.id,
+                                //   nama: task['namaBarang'],
+                                // );
+                              }),
+                            );
+                          },
+                          child: Container(
+                              margin: EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(8.0),
+                              // color: Colors.orange,
+                              child: Text(
+                                "Edit",
+                                style: TextStyle(fontSize: 18),
+                              )),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title:
+                                      Text("Yakin ingin menghapus barang ini?"),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text('Ya'),
+                                      onPressed: () {
+                                        // createData();
+                                        // database.createData(name, deskripsi);
+                                        DocumentReference documentReference =
+                                            FirebaseFirestore.instance
+                                                .collection("Barang")
+                                                .doc(widget.kodeBarang);
+
+                                        documentReference
+                                            .delete()
+                                            .whenComplete(() {
+                                          print(widget.kodeBarang + "deleted");
+                                        });
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    'Barang Inventaris berhasil dihapus!!!'),
+                                                actions: <Widget>[
+                                                  FlatButton(
+                                                    child: Text('Ok'),
+                                                    onPressed: () {
+                                                      Navigator.of(context).push(
+                                                          new MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  new HalamanUtama()));
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+                                      },
+                                    ),
+                                    FlatButton(
+                                      child: Text('Tidak'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                              margin: EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                "Hapus",
+                                style: TextStyle(fontSize: 18),
+                              )),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                              margin: EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                "Tutup",
+                                style: TextStyle(fontSize: 18),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -45,22 +45,18 @@ class _ScanPageState extends State<ScanPage> {
                 setState(() {
                   qrCodeResult = codeSanner;
                 });
-                
+
                 DocumentReference documentReference = FirebaseFirestore.instance
-                    .collection("coba")
+                    .collection("Barang")
                     .doc(qrCodeResult);
 
                 DocumentSnapshot doc = await documentReference.get();
-                  
-                  String a = doc.data()['nama'];
-                  var b = doc.data()['nama'];
-                  
+                if (!doc.exists) {
                   showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: Text(a),
+                      title: Text("Data Not Found!"),
                       actions: <Widget>[
-                        
                         TextButton(
                           onPressed: () => Navigator.pop(context, 'OK'),
                           child: const Text('OK'),
@@ -68,7 +64,35 @@ class _ScanPageState extends State<ScanPage> {
                       ],
                     ),
                   );
-                
+                } else if (doc.exists) {
+                  String a = doc.data()['kodeBarang'];
+                  var b = doc.data()['kodeBarang'];
+
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: Text(a),
+                      content: Column(
+                        children: [
+                          Text(doc.data()['namaBarang']),
+                          // Text(doc.data()['statusBarang']),
+                          Text(doc.data()['merk']),
+                          Text(doc.data()['statusBarang']),
+                          Text(doc.data()['jmlBarang'].toString()),
+                          Text(doc.data()['thnBuat'].toString()),
+                          Text(doc.data()['keterangan'])
+                        ],
+                      ),
+                      //  : Text(""),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
               },
               child: Text(
                 "Open Scanner",

@@ -224,9 +224,12 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                                                                     ),
                                                                     trailing:
                                                                         IconButton(
-                                                                      icon: Icon(
-                                                                          Icons
-                                                                              .scanner),
+                                                                      icon: Image
+                                                                          .asset(
+                                                                        "assets/images/qrcode.png",
+                                                                        height:
+                                                                            20,
+                                                                      ),
                                                                       onPressed:
                                                                           () async {
                                                                         bool

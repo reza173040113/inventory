@@ -72,16 +72,20 @@ class _ScanPageState extends State<ScanPage> {
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
                       title: Text(a),
-                      content: Column(
-                        children: [
-                          Text(doc.data()['namaBarang']),
-                          // Text(doc.data()['statusBarang']),
-                          Text(doc.data()['merk']),
-                          Text(doc.data()['statusBarang']),
-                          Text(doc.data()['jmlBarang'].toString()),
-                          Text(doc.data()['thnBuat'].toString()),
-                          Text(doc.data()['keterangan'])
-                        ],
+                      content: Container(
+                        height: MediaQuery.of(context).size.height *0.4,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Nama Barang : "+doc.data()['namaBarang']),
+                            // Text(doc.data()['statusBarang']),
+                            Text("Merk : "+doc.data()['merk']),
+                            Text("Status Barang : "+doc.data()['statusBarang']),
+                            Text("Jumlah Barang : "+doc.data()['jmlBarang'].toString()),
+                            Text("Tahun Buat : "+doc.data()['thnBuat'].toString()),
+                            Text("Keterangan : "+doc.data()['keterangan'])
+                          ],
+                        ),
                       ),
                       //  : Text(""),
                       actions: <Widget>[

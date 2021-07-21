@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 // import 'package:custom_dialog_flutter_demo/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +8,9 @@ import 'package:inventory/HalamanUtama.dart';
 import 'package:inventory/editAsset.dart';
 import 'package:inventory/pinjaman.dart';
 import 'package:inventory/widget/constants.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class CustomDialogBox extends StatefulWidget {
   final String documentId,
@@ -305,8 +309,75 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                               )),
                         ),
                         GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pop();
+                          onTap: () async {
+                            final dir = await getExternalStorageDirectory();
+                            print("Directoryyyyyyyyy:${dir.path}");
+                            final pdf = pw.Document();
+                            const _darkColor = PdfColor.fromInt(0xff242424);
+                            const PdfColor accentColor =
+                                PdfColor.fromInt(0xfff1c0c0);
+
+                            final headers = [
+                              'Kode',
+                              'Nama Barang',
+                              'Merk',
+                              'Tahun Dibuat',
+                              'Status',
+                              'Jumlah',
+                              'Keterangan'
+                            ];
+
+                            pdf.addPage(pw.MultiPage(
+                                build: (context) => <pw.Widget>[
+                                      pw.Header(
+                                          level: 0,
+                                          child: pw.Container(
+                                              decoration:
+                                                  const pw.BoxDecoration(
+                                                color: PdfColor.fromInt(
+                                                    0xffffffff),
+                                              ),
+                                              margin: const pw.EdgeInsets.only(
+                                                  bottom: 8, top: 8),
+                                              padding:
+                                                  const pw.EdgeInsets.fromLTRB(
+                                                      10, 7, 10, 4),
+                                              child: pw.Column(children: [
+                                                pw.Text(
+                                                  "Surat Peminjaman Asset",
+                                                  style: pw.TextStyle(
+                                                      fontSize: 16,
+                                                      color: _darkColor,
+                                                      fontWeight:
+                                                          pw.FontWeight.bold),
+                                                ),
+                                                pw.Text("+6287788169658",
+                                                    style: pw.TextStyle(
+                                                        fontSize: 14,
+                                                        color: _darkColor)),
+                                                pw.Text("Regezaga, Brebes",
+                                                    style: pw.TextStyle(
+                                                        fontSize: 14,
+                                                        color: _darkColor)),
+                                                pw.Divider(color: accentColor),
+                                              ]))),
+                                      pw.Table.fromTextArray(
+                                          headers: headers,
+                                          data: <List<String>>[
+                                            <String>[
+                                              widget.kodeBarang,
+                                              widget.namaBarang,
+                                              widget.merk,
+                                              widget.thnBuat.toString(),
+                                              widget.statusBarang,
+                                              widget.jmlBarang.toString(),
+                                              widget.keterangan
+                                            ]
+                                          ]),
+                                    ]));
+
+                            final file = File('${dir.path}/+${widget.kodeBarang}.pdf');
+                            await file.writeAsBytes(await pdf.save());
                           },
                           child: Container(
                               decoration: BoxDecoration(
@@ -316,11 +387,28 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                               margin: EdgeInsets.all(8.0),
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                "Tutup",
+                                "Export",
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               )),
                         ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Navigator.of(context).pop();
+                        //   },
+                        //   child: Container(
+                        //       decoration: BoxDecoration(
+                        //           color: Color.fromRGBO(4, 141, 204, 1),
+                        //           border: Border.all(),
+                        //           borderRadius: BorderRadius.circular(10)),
+                        //       margin: EdgeInsets.all(8.0),
+                        //       padding: EdgeInsets.all(8.0),
+                        //       child: Text(
+                        //         "Tutup",
+                        //         style: TextStyle(
+                        //             fontSize: 17, fontWeight: FontWeight.bold),
+                        //       )),
+                        // ),
                       ],
                     ),
                   ),
@@ -344,4 +432,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
       ],
     );
   }
+
+  Widget pdfHeader() {}
 }

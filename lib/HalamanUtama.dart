@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,9 +9,14 @@ import 'package:inventory/addAsset.dart';
 import 'package:inventory/editAsset.dart';
 import 'package:inventory/generate.dart';
 import 'package:inventory/login/MyApp.dart';
+import 'package:inventory/readAsset.dart';
+import 'package:inventory/readPeminjaman.dart';
 import 'package:inventory/scan.dart';
 import 'package:inventory/widget/cardMenu.dart';
 import 'package:inventory/widget/customDialog.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -81,208 +88,270 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                         //   style: TextStyle(fontSize: 10),
                         // ),
                         SizedBox(height: 5),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                // color: kExpandedColor,
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 10.0,
-                                  horizontal: 10.0,
-                                ),
-                                child: Column(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return AddAsset();
-                                        }));
-                                      },
-                                      child: SymptomCard(
-                                        title: "Add Inventory",
-                                        image: "assets/images/pencil.png",
-                                      ),
+                        Column(
+                          children: [
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    // color: kExpandedColor,
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 10.0,
+                                      horizontal: 10.0,
                                     ),
-                                  ],
+                                    child: Column(
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return AddAsset();
+                                            }));
+                                          },
+                                          child: SymptomCard(
+                                            title: "Add Inventory",
+                                            image: "assets/images/pencil.png",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Expanded(
+                                  child: Container(
+                                    // color: kExpandedColor,
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 10.0,
+                                      horizontal: 10.0,
+                                    ),
+                                    child: Column(
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return ScanPage();
+                                            }));
+                                          },
+                                          child: SymptomCard(
+                                            title: "Scan Inventory",
+                                            image: "assets/images/scan.png",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                // 
+                              ],
                             ),
-                            Expanded(
-                              child: Container(
-                                // color: kExpandedColor,
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 10.0,
-                                  horizontal: 10.0,
-                                ),
-                                child: Column(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return ScanPage();
-                                        }));
-                                      },
-                                      child: SymptomCard(
-                                        title: "Scan Inventory",
-                                        image: "assets/images/scan.png",
-                                      ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    // color: kExpandedColor,
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 10.0,
+                                      horizontal: 10.0,
                                     ),
-                                  ],
+                                    child: Column(
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return Read();
+                                            }));
+                                          },
+                                          child: SymptomCard(
+                                            title: "Laporan Asset Inventory",
+                                            image: "assets/images/pencil.png",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Expanded(
+                                  child: Container(
+                                    // color: kExpandedColor,
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 10.0,
+                                      horizontal: 10.0,
+                                    ),
+                                    child: Column(
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return ReadPeminjaman();
+                                            }));
+                                          },
+                                          child: SymptomCard(
+                                            title: "Laporan Peminjaman",
+                                            image: "assets/images/scan.png",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                // 
+                              ],
                             ),
                           ],
                         ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Column(
-                            children: <Widget>[
-                              StreamBuilder(
-                                stream: FirebaseFirestore.instance
-                                    .collection("Barang")
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: snapshot.data.docs.length,
-                                      itemBuilder: (context, index) {
-                                        DocumentSnapshot documentSnapshot =
-                                            snapshot.data.docs[index];
-                                        Map<String, dynamic> task =
-                                            documentSnapshot.data();
-                                        return GestureDetector(
-                                          child: InkWell(
-                                            child: Container(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 2),
-                                                child: Container(
-                                                  child: SizedBox(
-                                                    child: Stack(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      children: <Widget>[
-                                                        Container(
-                                                            margin:
-                                                                EdgeInsets.all(
-                                                                    8.0),
-                                                            child: Card(
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8.0),
-                                                                ),
-                                                                elevation: 5,
-                                                                margin:
-                                                                    EdgeInsets
-                                                                        .all(5),
-                                                                child: InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    showDialog(
-                                                                        context:
-                                                                            context,
-                                                                        builder:
-                                                                            (BuildContext
-                                                                                context) {
-                                                                          return CustomDialogBox(
-                                                                            documentId:
-                                                                                documentSnapshot.id,
-                                                                            namaBarang:
-                                                                                task['namaBarang'],
-                                                                            merk:
-                                                                                task['merk'],
-                                                                            thnBuat:
-                                                                                task['thnBuat'],
-                                                                            kodeBarang:
-                                                                                task['kodeBarang'],
-                                                                            statusBarang:
-                                                                                task['statusBarang'],
-                                                                            jmlBarang:
-                                                                                task['jmlBarang'],
-                                                                            keterangan:
-                                                                                task['keterangan'],
-                                                                            text:
-                                                                                "Yes",
-                                                                          );
-                                                                        });
-                                                                  },
-                                                                  child:
-                                                                      ListTile(
-                                                                    title: Text(
-                                                                      task[
-                                                                          'namaBarang'],
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .ellipsis,
-                                                                      maxLines:
-                                                                          1,
-                                                                      style: TextStyle(
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          color:
-                                                                              Colors.brown),
-                                                                    ),
-                                                                    subtitle:
-                                                                        Column(
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .start,
-                                                                      children: [
-                                                                        Text(
-                                                                            "Kesediaan : ${task['namaBarang']}"),
-                                                                        // Text("Tanggal :" +
-                                                                        //     dateString)
-                                                                      ],
-                                                                    ),
-                                                                    // trailing:
-                                                                    trailing: IconButton(
-                                                                        icon: Image.asset(
-                                                                          "assets/images/qrcode.png",
-                                                                          height:
-                                                                              20,
-                                                                        ),
-                                                                        onPressed: () async {
-                                                                          bool
-                                                                              result =
-                                                                              await Navigator.push(
-                                                                            context,
-                                                                            MaterialPageRoute(builder:
-                                                                                (context) {
-                                                                              return Generate(
-                                                                                documentId: documentSnapshot.id,
-                                                                                nama: task['namaBarang'],
-                                                                              );
-                                                                            }),
-                                                                          );
-                                                                        }),
-                                                                  ),
-                                                                ))),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  } else {
-                                    return Container();
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
+                        // SingleChildScrollView(
+                        //   scrollDirection: Axis.vertical,
+                        //   child: Column(
+                        //     children: <Widget>[
+                        //       StreamBuilder(
+                        //         stream: FirebaseFirestore.instance
+                        //             .collection("Barang")
+                        //             .snapshots(),
+                        //         builder: (context, snapshot) {
+                        //           if (snapshot.hasData) {
+                        //             return ListView.builder(
+                        //               shrinkWrap: true,
+                        //               itemCount: snapshot.data.docs.length,
+                        //               itemBuilder: (context, index) {
+                        //                 DocumentSnapshot documentSnapshot =
+                        //                     snapshot.data.docs[index];
+                        //                 Map<String, dynamic> task =
+                        //                     documentSnapshot.data();
+                        //                 return GestureDetector(
+                        //                   child: InkWell(
+                        //                     child: Container(
+                        //                       child: Padding(
+                        //                         padding: const EdgeInsets.only(
+                        //                             bottom: 2),
+                        //                         child: Container(
+                        //                           child: SizedBox(
+                        //                             child: Stack(
+                        //                               alignment:
+                        //                                   Alignment.centerLeft,
+                        //                               children: <Widget>[
+                        //                                 Container(
+                        //                                     margin:
+                        //                                         EdgeInsets.all(
+                        //                                             8.0),
+                        //                                     child: Card(
+                        //                                         shape:
+                        //                                             RoundedRectangleBorder(
+                        //                                           borderRadius:
+                        //                                               BorderRadius
+                        //                                                   .circular(
+                        //                                                       8.0),
+                        //                                         ),
+                        //                                         elevation: 5,
+                        //                                         margin:
+                        //                                             EdgeInsets
+                        //                                                 .all(5),
+                        //                                         child: InkWell(
+                        //                                           onTap:
+                        //                                               () async {
+                        //                                             showDialog(
+                        //                                                 context:
+                        //                                                     context,
+                        //                                                 builder:
+                        //                                                     (BuildContext
+                        //                                                         context) {
+                        //                                                   return CustomDialogBox(
+                        //                                                     documentId:
+                        //                                                         documentSnapshot.id,
+                        //                                                     namaBarang:
+                        //                                                         task['namaBarang'],
+                        //                                                     merk:
+                        //                                                         task['merk'],
+                        //                                                     thnBuat:
+                        //                                                         task['thnBuat'],
+                        //                                                     kodeBarang:
+                        //                                                         task['kodeBarang'],
+                        //                                                     statusBarang:
+                        //                                                         task['statusBarang'],
+                        //                                                     jmlBarang:
+                        //                                                         task['jmlBarang'],
+                        //                                                     keterangan:
+                        //                                                         task['keterangan'],
+                        //                                                     text:
+                        //                                                         "Yes",
+                        //                                                   );
+                        //                                                 });
+                        //                                           },
+                        //                                           child:
+                        //                                               ListTile(
+                        //                                             title: Text(
+                        //                                               task[
+                        //                                                   'namaBarang'],
+                        //                                               overflow:
+                        //                                                   TextOverflow
+                        //                                                       .ellipsis,
+                        //                                               maxLines:
+                        //                                                   1,
+                        //                                               style: TextStyle(
+                        //                                                   fontWeight: FontWeight
+                        //                                                       .bold,
+                        //                                                   color:
+                        //                                                       Colors.brown),
+                        //                                             ),
+                        //                                             subtitle:
+                        //                                                 Column(
+                        //                                               crossAxisAlignment:
+                        //                                                   CrossAxisAlignment
+                        //                                                       .start,
+                        //                                               children: [
+                        //                                                 Text(
+                        //                                                     "Kesediaan : ${task['namaBarang']}"),
+                        //                                                 // Text("Tanggal :" +
+                        //                                                 //     dateString)
+                        //                                               ],
+                        //                                             ),
+                        //                                             // trailing:
+                        //                                             trailing: IconButton(
+                        //                                                 icon: Image.asset(
+                        //                                                   "assets/images/qrcode.png",
+                        //                                                   height:
+                        //                                                       20,
+                        //                                                 ),
+                        //                                                 onPressed: () async {
+                        //                                                   bool
+                        //                                                       result =
+                        //                                                       await Navigator.push(
+                        //                                                     context,
+                        //                                                     MaterialPageRoute(builder:
+                        //                                                         (context) {
+                        //                                                       return Generate(
+                        //                                                         documentId: documentSnapshot.id,
+                        //                                                         nama: task['namaBarang'],
+                        //                                                       );
+                        //                                                     }),
+                        //                                                   );
+                        //                                                 }),
+                        //                                           ),
+                        //                                         ))),
+                        //                               ],
+                        //                             ),
+                        //                           ),
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 );
+                        //               },
+                        //             );
+                        //           } else {
+                        //             return Container();
+                        //           }
+                        //         },
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
 
                         // TextFormField(
                         //   minLines:

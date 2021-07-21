@@ -1,6 +1,6 @@
 // import 'package:ds_master_detail/src/models/product_model.dart';
 import 'package:flutter/material.dart';
-
+import 'package:pdf/pdf.dart';
 class Detail extends StatefulWidget {
   final String documentId,
       namaBarang,

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inventory/HalamanUtama.dart';
 import 'package:inventory/editAsset.dart';
+import 'package:inventory/pinjaman.dart';
 import 'package:inventory/widget/constants.dart';
 
 class CustomDialogBox extends StatefulWidget {
@@ -166,6 +167,42 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
+                                return Peminjaman(
+                                  namaBarang: widget.namaBarang,
+                                  merk: widget.merk,
+                                  thnBuat: widget.thnBuat,
+                                  kodeBarang: widget.kodeBarang,
+                                  statusBarang: widget.statusBarang,
+                                  jmlBarang: widget.jmlBarang,
+                                  keterangan: widget.keterangan,
+                                );
+                                // Generate(
+                                //   documentId: documentSnapshot.id,
+                                //   nama: task['namaBarang'],
+                                // );
+                              }),
+                            );
+                          },
+                          child: Container(
+                              margin: EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(0, 165, 104, 1),
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(10)),
+
+                              // color: Colors.orange,
+                              child: Text(
+                                "Pinjam",
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
+                              )),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
                                 return EditAsset(
                                   namaBarang: widget.namaBarang,
                                   merk: widget.merk,
@@ -186,13 +223,13 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                               margin: EdgeInsets.all(8.0),
                               padding: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
-                                  color: Color.fromRGBO(235, 102, 0, 1),
+                                  color: Color.fromRGBO(0, 165, 104, 1),
                                   border: Border.all(),
                                   borderRadius: BorderRadius.circular(10)),
 
                               // color: Colors.orange,
                               child: Text(
-                                "Edit",
+                                "Ubah",
                                 style: TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               )),
@@ -257,7 +294,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                           child: Container(
                               decoration: BoxDecoration(
                                   border: Border.all(),
-                                  color: Color.fromRGBO(214, 18, 0, 1),
+                                  color: Color.fromRGBO(221, 75, 62, 1),
                                   borderRadius: BorderRadius.circular(10)),
                               margin: EdgeInsets.all(8.0),
                               padding: EdgeInsets.all(8.0),

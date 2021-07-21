@@ -33,4 +33,8 @@ class UserController {
     };
     userModel.saveUser(documentId, user);
   }
+
+  String getTglPinjam(tglPinjam) {
+    return tglPinjam;
+  }
 }

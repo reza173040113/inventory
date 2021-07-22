@@ -388,9 +388,7 @@ class _PeminjamanState extends State<Peminjaman> {
                                             builder: (BuildContext context) {
                                               return AlertDialog(
                                                 title: Text(
-                                                    'Barang Inventaris berhasil dipinjam!!!' +
-                                                        jumlahBarangTersisa
-                                                            .toString()),
+                                                    'Barang Inventaris berhasil dipinjam!!! '),
                                                 actions: <Widget>[
                                                   FlatButton(
                                                     child: Text('Ok'),

@@ -188,18 +188,16 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             );
                           },
                           child: Container(
-                              margin: EdgeInsets.all(8.0),
                               padding: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
-                                  color: Color.fromRGBO(0, 165, 104, 1),
-                                  border: Border.all(),
+                                  color: Colors.lightBlue,
                                   borderRadius: BorderRadius.circular(10)),
 
                               // color: Colors.orange,
                               child: Text(
                                 "Pinjam",
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
+                                    fontSize: 17, fontWeight: FontWeight.bold,),
                               )),
                         ),
                         GestureDetector(
@@ -224,11 +222,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             );
                           },
                           child: Container(
-                              margin: EdgeInsets.all(8.0),
+                              margin: EdgeInsets.only(left:8.0),
                               padding: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
-                                  color: Color.fromRGBO(0, 165, 104, 1),
-                                  border: Border.all(),
+                                  color: Color.fromRGBO(255, 169, 0,1),
                                   borderRadius: BorderRadius.circular(10)),
 
                               // color: Colors.orange,
@@ -297,8 +294,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                           },
                           child: Container(
                               decoration: BoxDecoration(
-                                  border: Border.all(),
-                                  color: Color.fromRGBO(221, 75, 62, 1),
+                                  color: Color.fromRGBO(205, 17, 59, 1),
                                   borderRadius: BorderRadius.circular(10)),
                               margin: EdgeInsets.all(8.0),
                               padding: EdgeInsets.all(8.0),
@@ -308,90 +304,90 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                     fontSize: 17, fontWeight: FontWeight.bold),
                               )),
                         ),
-                        GestureDetector(
-                          onTap: () async {
-                            final dir = await getExternalStorageDirectory();
-                            print("Directoryyyyyyyyy:${dir.path}");
-                            final pdf = pw.Document();
-                            const _darkColor = PdfColor.fromInt(0xff242424);
-                            const PdfColor accentColor =
-                                PdfColor.fromInt(0xfff1c0c0);
+                        // GestureDetector(
+                        //   onTap: () async {
+                        //     final dir = await getExternalStorageDirectory();
+                        //     print("Directoryyyyyyyyy:${dir.path}");
+                        //     final pdf = pw.Document();
+                        //     const _darkColor = PdfColor.fromInt(0xff242424);
+                        //     const PdfColor accentColor =
+                        //         PdfColor.fromInt(0xfff1c0c0);
 
-                            final headers = [
-                              'Kode',
-                              'Nama Barang',
-                              'Merk',
-                              'Tahun Dibuat',
-                              'Status',
-                              'Jumlah',
-                              'Keterangan'
-                            ];
+                        //     final headers = [
+                        //       'Kode',
+                        //       'Nama Barang',
+                        //       'Merk',
+                        //       'Tahun Dibuat',
+                        //       'Status',
+                        //       'Jumlah',
+                        //       'Keterangan'
+                        //     ];
 
-                            pdf.addPage(pw.MultiPage(
-                                build: (context) => <pw.Widget>[
-                                      pw.Header(
-                                          level: 0,
-                                          child: pw.Container(
-                                              decoration:
-                                                  const pw.BoxDecoration(
-                                                color: PdfColor.fromInt(
-                                                    0xffffffff),
-                                              ),
-                                              margin: const pw.EdgeInsets.only(
-                                                  bottom: 8, top: 8),
-                                              padding:
-                                                  const pw.EdgeInsets.fromLTRB(
-                                                      10, 7, 10, 4),
-                                              child: pw.Column(children: [
-                                                pw.Text(
-                                                  "Surat Peminjaman Asset",
-                                                  style: pw.TextStyle(
-                                                      fontSize: 16,
-                                                      color: _darkColor,
-                                                      fontWeight:
-                                                          pw.FontWeight.bold),
-                                                ),
-                                                pw.Text("+6287788169658",
-                                                    style: pw.TextStyle(
-                                                        fontSize: 14,
-                                                        color: _darkColor)),
-                                                pw.Text("Regezaga, Brebes",
-                                                    style: pw.TextStyle(
-                                                        fontSize: 14,
-                                                        color: _darkColor)),
-                                                pw.Divider(color: accentColor),
-                                              ]))),
-                                      pw.Table.fromTextArray(
-                                          headers: headers,
-                                          data: <List<String>>[
-                                            <String>[
-                                              widget.kodeBarang,
-                                              widget.namaBarang,
-                                              widget.merk,
-                                              widget.thnBuat.toString(),
-                                              widget.statusBarang,
-                                              widget.jmlBarang.toString(),
-                                              widget.keterangan
-                                            ]
-                                          ]),
-                                    ]));
+                        //     pdf.addPage(pw.MultiPage(
+                        //         build: (context) => <pw.Widget>[
+                        //               pw.Header(
+                        //                   level: 0,
+                        //                   child: pw.Container(
+                        //                       decoration:
+                        //                           const pw.BoxDecoration(
+                        //                         color: PdfColor.fromInt(
+                        //                             0xffffffff),
+                        //                       ),
+                        //                       margin: const pw.EdgeInsets.only(
+                        //                           bottom: 8, top: 8),
+                        //                       padding:
+                        //                           const pw.EdgeInsets.fromLTRB(
+                        //                               10, 7, 10, 4),
+                        //                       child: pw.Column(children: [
+                        //                         pw.Text(
+                        //                           "Surat Peminjaman Asset",
+                        //                           style: pw.TextStyle(
+                        //                               fontSize: 16,
+                        //                               color: _darkColor,
+                        //                               fontWeight:
+                        //                                   pw.FontWeight.bold),
+                        //                         ),
+                        //                         pw.Text("+6287788169658",
+                        //                             style: pw.TextStyle(
+                        //                                 fontSize: 14,
+                        //                                 color: _darkColor)),
+                        //                         pw.Text("Regezaga, Brebes",
+                        //                             style: pw.TextStyle(
+                        //                                 fontSize: 14,
+                        //                                 color: _darkColor)),
+                        //                         pw.Divider(color: accentColor),
+                        //                       ]))),
+                        //               pw.Table.fromTextArray(
+                        //                   headers: headers,
+                        //                   data: <List<String>>[
+                        //                     <String>[
+                        //                       widget.kodeBarang,
+                        //                       widget.namaBarang,
+                        //                       widget.merk,
+                        //                       widget.thnBuat.toString(),
+                        //                       widget.statusBarang,
+                        //                       widget.jmlBarang.toString(),
+                        //                       widget.keterangan
+                        //                     ]
+                        //                   ]),
+                        //             ]));
 
-                            final file = File('${dir.path}/+${widget.kodeBarang}.pdf');
-                            await file.writeAsBytes(await pdf.save());
-                          },
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(4, 141, 204, 1),
-                                  border: Border.all(),
-                                  borderRadius: BorderRadius.circular(10)),
-                              margin: EdgeInsets.all(8.0),
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                "Export",
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.bold),
-                              )),
-                        ),
+                        //     final file = File('${dir.path}/+${widget.kodeBarang}.pdf');
+                        //     await file.writeAsBytes(await pdf.save());
+                        //   },
+                        //   child: Container(
+                        //       decoration: BoxDecoration(
+                        //           color: Color.fromRGBO(4, 141, 204, 1),
+                        //           border: Border.all(),
+                        //           borderRadius: BorderRadius.circular(10)),
+                        //       margin: EdgeInsets.all(8.0),
+                        //       padding: EdgeInsets.all(8.0),
+                        //       child: Text(
+                        //         "Export",
+                        //         style: TextStyle(
+                        //             fontSize: 17, fontWeight: FontWeight.bold),
+                        //       )),
+                        // ),
                         // GestureDetector(
                         //   onTap: () {
                         //     Navigator.of(context).pop();

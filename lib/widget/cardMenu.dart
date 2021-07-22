@@ -43,6 +43,7 @@ class SymptomCard extends StatelessWidget {
           ],
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
               height: 5,
@@ -51,9 +52,12 @@ class SymptomCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              ),
             ),
           ],
         ),

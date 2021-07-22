@@ -44,7 +44,6 @@ class _HalamanUtamaState extends State<HalamanUtama> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("Halaman Utama"),
-          backgroundColor: Color.fromARGB(237, 30, 60, 50),
           actions: [
             GestureDetector(
                 onTap: () async {
@@ -65,7 +64,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                   height: size.height * 0.30,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/images/6.jpg"),
+                        image: AssetImage("assets/images/4.jpg"),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -74,9 +73,22 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                     top: size.height * 0.27,
                   ),
                   width: double.infinity,
+                  height: 495,
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.red,
+                        blurRadius: 30.0, // soften the shadow
+                        spreadRadius: 5.0, //extend the shadow
+                        offset: Offset(
+                          15.0, // Move to right 10  horizontally
+                          0.0, // Move to bottom 10 Vertically
+                        ),
+                      )
+                    ],
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(30),
                     child: Column(
@@ -144,7 +156,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                                     ),
                                   ),
                                 ),
-                                // 
+                                //
                               ],
                             ),
                             Row(
@@ -168,7 +180,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                                           },
                                           child: SymptomCard(
                                             title: "Laporan Asset Inventory",
-                                            image: "assets/images/pencil.png",
+                                            image: "assets/images/report.png",
                                           ),
                                         ),
                                       ],
@@ -194,14 +206,14 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                                           },
                                           child: SymptomCard(
                                             title: "Laporan Peminjaman",
-                                            image: "assets/images/scan.png",
+                                            image: "assets/images/report2.png",
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ),
-                                // 
+                                //
                               ],
                             ),
                           ],
